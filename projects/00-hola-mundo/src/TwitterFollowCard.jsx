@@ -1,16 +1,17 @@
 import './App.css'
 
-export function TwitterFollowCard({ username, name, isFollowing }){
+export function TwitterFollowCard({ children, userName, name, isFollowing }){
+
     return (
         <article className='tw-followCard'>
             <header className='tw-followCard-header'>
                 <img 
                     className='tw-followCard-avatar'
-                    src={`https://unavatar.io/${username}`}
+                    src={`https://unavatar.io/${userName}`}
                     alt="avatar snapchat" />
                 <div className='tw-followCard-div'>
-                    <strong>{name}</strong>
-                    <span className='tw-followCard-infoUsername'>@{username}</span>
+                    <strong>{children}</strong>
+                    <span className='tw-followCard-infoUsername'>@{userName}</span>
                 </div>
             </header>
 
