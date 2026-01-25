@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import confetti from "canvas-confetti"
 
 import { Square } from "./components/Square.jsx"
@@ -54,6 +54,11 @@ function App() {
       setWinner(false)
     }
   }
+
+  useEffect(() => {
+    //como minimo se ejecuta una vez 
+    console.log('useEffect')
+  })
 
   return (
     <main className='board'>
