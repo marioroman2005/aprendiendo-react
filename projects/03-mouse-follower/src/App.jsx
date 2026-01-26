@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import './App.css'
   
-function App() {
+const FollowMouse = () => {
 
   const [enabled, setEnabled] = useState(false)
   const [position, setPosition] = useState({x: 0, y: 0})
@@ -19,8 +19,11 @@ function App() {
       window.addEventListener('pointermove', handleMove)
     }
 
-    // se ejecuta cuando react deja de renderizar el componente para limpiar, y cada vez que cambie la dependencia
+    //clean up
+    // -> Cuando el componente se desmonta 
+    // -> Cuando cambian las dependencias antes de ejecutar el efecto de nuevo
     return () => { 
+      console.log('cleanup')
       window.removeEventListener('pointermove', handleMove)
     }
     
@@ -28,23 +31,38 @@ function App() {
 
   return (
     <>
+      <div style={{
+            position : 'absolute',
+            backgroundColor : 'rgba(0, 0, 0, 0.5)',
+            border: '1px solid #fff',
+            borderRadius : '50%',
+            opacity : 0.8,
+            pointerEvents : 'none',
+            left : -25,
+            top: -25,
+            width: 40,
+            height: 40,
+            transform : `translate(${position.x}px, ${position.y}px)`
+          }}
+      />
+      <button onClick={() => setEnabled(!enabled)}>
+        {enabled ? 'Desactivar' : 'Activar'} Seguir puntero
+      </button>
+
+    </>
+
+  )
+}
+
+function App() {
+  const [mounted, setMounted] = useState(true) 
+
+  return (
+    <>
       <main>
-        <div style={{
-          position : 'absolute',
-          backgroundColor : 'rgba(0, 0, 0, 0.5)',
-          border: '1px solid #fff',
-          borderRadius : '50%',
-          opacity : 0.8,
-          pointerEvents : 'none',
-          left : -25,
-          top: -25,
-          width: 40,
-          height: 40,
-          transform : `translate(${position.x}px, ${position.y}px)`
-        }}
-        />
-        <button onClick={() => setEnabled(!enabled)}>
-          {enabled ? 'Desactivar' : 'Activar'} Seguir puntero
+        { mounted && <FollowMouse /> }
+        <button onClick = {() => setMounted(!mounted)}>
+          Toggle mounted follow mouse component
         </button>
       </main>
       
